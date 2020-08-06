@@ -1,0 +1,23 @@
+{
+  "name": "my-js-lib",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node main.js < input.txt"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tyahha/my-js-lib.git"
+  },
+  "author": "Toshinori Sato",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tyahha/my-js-lib/issues"
+  },
+  "homepage": "https://github.com/tyahha/my-js-lib#readme",
+  "devDependencies": {
+    "jest": "^26.2.2"
+  }
+}
