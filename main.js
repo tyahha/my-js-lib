@@ -13,16 +13,27 @@ reader.on("line", (line) => {
 })
 
 reader.on("close", () => {
-  const S = lines[1].split(" ")
-  const T = lines[3].split(" ")
-  const C = SinT(S, T)
-  console.log(C.length)
+  const S = lines[1].split(" ").map(Number)
+  const T = lines[3].split(" ").map(Number)
+  let C = 0
+  T.forEach(e => {
+    binarySearch(S, e) && C++
+  })
+  console.log(C)
 })
 
-function SinT(S, T) {
-  const ret = []
-  T.forEach((e) => {
-    S.includes(e) && ret.push(e)
-  })
-  return ret
+const binarySearch = (S, t) => {
+  let left = 0
+  let right = S.length
+  while (left < right) {
+    const mid = Math.floor((left + right) / 2)
+    if (S[mid] === t) {
+      return true
+    } else if (t < S[mid]) {
+      right = mid
+    } else {
+      left = mid + 1
+    }
+  }
+  return false
 }
