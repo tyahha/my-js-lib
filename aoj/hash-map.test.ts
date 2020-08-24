@@ -1,4 +1,4 @@
-const {strToNumber, HM} = require("./hash-map")
+import { strToNumber, HM } from "./hash-map"
 
 describe("hash map", () => {
   test("insert and find basic", () => {

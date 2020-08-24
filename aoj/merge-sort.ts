@@ -1,4 +1,4 @@
-const merge = (A, left, mid, right) => {
+const merge = (A: number[], left: number, mid: number, right: number) => {
   const n1 = mid - left
   const n2 = right - mid
   const L = Array(n1 + 1)
@@ -25,7 +25,7 @@ const merge = (A, left, mid, right) => {
   }
 }
 
-const mergeSort = (A, left, right) => {
+export const mergeSort = (A: number[], left: number, right: number) => {
   if (left + 1 < right) {
     const mid = Math.floor((left + right) / 2)
     mergeSort(A, left, mid)
@@ -33,8 +33,4 @@ const mergeSort = (A, left, right) => {
     merge(A, left, mid, right)
   }
   return A
-}
-
-module.exports = {
-  mergeSort,
 }

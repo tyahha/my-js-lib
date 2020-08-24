@@ -1,4 +1,4 @@
-const binarySearch = require("./binary-search")
+import {binarySearch} from "./binary-search"
 
 describe("binary-search", () => {
   test("case 1", () => {

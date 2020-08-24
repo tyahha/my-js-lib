@@ -1,4 +1,4 @@
-const { formattedKochCurve } = require("./koch-curve")
+//import { formattedKochCurve } from "./koch-curve"
 
 
 // const ans1 = ```0.00000000 0.00000000

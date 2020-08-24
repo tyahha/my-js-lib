@@ -1,6 +1,6 @@
 const m = 1000000
 
-const strToNumber = (str) => {
+export const strToNumber = (str: string): number => {
   let numWeight = 1
   let numWeightPerDigit = 4
   let ret = 0
@@ -30,24 +30,25 @@ const strToNumber = (str) => {
   return ret
 }
 
-function h1(key) {
+function h1(key: number) {
   return key % m
 }
 
-function h2(key) {
+function h2(key: number) {
   return 1 + (key % (m - 1))
 }
 
-function h(key, i) {
+function h(key: number, i: number) {
   return (h1(key) + i * h2(key)) % m
 }
 
-class HM {
+export class HM {
+  T: (undefined|number)[]
   constructor() {
     this.T = Array(m);
   }
 
-  insert(str) {
+  insert(str: string) {
     let i = 0, j
     const key = strToNumber(str)
     const T = this.T
@@ -62,7 +63,7 @@ class HM {
     }
   }
 
-  find(str) {
+  find(str: string) {
     let i = 0, j
     const key = strToNumber(str)
     const T = this.T
@@ -77,9 +78,4 @@ class HM {
       }
     }
   }
-}
-
-module.exports = {
-  strToNumber,
-  HM
 }

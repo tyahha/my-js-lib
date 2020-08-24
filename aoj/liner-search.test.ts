@@ -1,4 +1,4 @@
-const SinT = require("./liner-search")
+import {SinT} from "./liner-search"
 
 describe("liner-search", () => {
   test("test", () => {

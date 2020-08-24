@@ -1,4 +1,4 @@
-const binarySearch = (S, t) => {
+export const binarySearch = (S: number[], t: number) => {
   let left = 0
   let right = S.length
   while (left < right) {
@@ -13,5 +13,3 @@ const binarySearch = (S, t) => {
   }
   return false
 }
-
-module.exports = binarySearch

@@ -1,29 +1,12 @@
-process.stdin.resume()
-process.stdin.setEncoding("utf8")
-
-const reader = require("readline").createInterface({
-  input: process.stdin,
-  output: process.stdout,
-})
-
-const lines = []
-
-reader.on("line", (line) => {
-  lines.push(line)
-})
-
-let count = 0
-
-reader.on("close", () => {
-  const n = lines[0] - 0
-  console.log(formattedKochCurve(n, [0, 0], [100, 0]))
-})
+import {Point2D} from "./common";
 
 const radian60 = (60 * Math.PI) / 180
 const cos60 = Math.cos(radian60)
 const sin60 = Math.sin(radian60)
 
-const kochCurveInner = (n, startPoint, endPoint) => {
+type kochCurveIF = (n: number, startPoint: Point2D, endPoint: Point2D) => Point2D[]
+
+export const kochCurveInner: kochCurveIF = (n, startPoint, endPoint) => {
   if (n === 0) return []
 
   const [sx, sy] = startPoint
@@ -43,9 +26,9 @@ const kochCurveInner = (n, startPoint, endPoint) => {
   const p2x = pdx * cos60 - pdy * sin60 + p1x
   const p2y = sin60 * pdx + pdy * cos60 + p1y
 
-  const p1 = [p1x, p1y]
-  const p2 = [p2x, p2y]
-  const p3 = [p3x, p3y]
+  const p1: Point2D = [p1x, p1y]
+  const p2: Point2D = [p2x, p2y]
+  const p3: Point2D = [p3x, p3y]
 
   return [
     ...kochCurveInner(n - 1, startPoint, p1),
@@ -58,12 +41,12 @@ const kochCurveInner = (n, startPoint, endPoint) => {
   ]
 }
 
-const kochCurve = (n, startPoint, endPoint) => {
+export const kochCurve: kochCurveIF = (n, startPoint, endPoint) => {
   return [startPoint, ...kochCurveInner(n, startPoint, endPoint), endPoint]
 }
 
-const formattedKochCurve = (n, startPoint, endPont) => {
-  return kochCurve(n, startPoint, endPont)
+export const formattedKochCurve = (n: number, startPoint: Point2D, endPoint: Point2D): string => {
+  return kochCurve(n, startPoint, endPoint)
     .map((p) => p.map((n) => n.toFixed(5)).join(" "))
     .join("\n")
 }

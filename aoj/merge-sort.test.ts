@@ -1,4 +1,4 @@
-const {mergeSort} = require("./merge-sort")
+import { mergeSort } from "./merge-sort"
 
 describe("merge sort", () => {
   test("sort", () => {
