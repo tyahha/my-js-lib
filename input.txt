@@ -1,14 +1,2 @@
-13
-insert AAA
-insert AAC
-insert AGA
-insert AGG
-insert TTT
-find AAA
-find CCC
-find CCC
-insert CCC
-find CCC
-insert T
-find TTT
-find T
+10
+8 5 9 2 6 3 7 1 10 4

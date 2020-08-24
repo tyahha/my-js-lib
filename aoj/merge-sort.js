@@ -1,26 +1,3 @@
-process.stdin.resume()
-process.stdin.setEncoding("utf8")
-
-const reader = require("readline").createInterface({
-  input: process.stdin,
-  output: process.stdout,
-})
-
-const lines = []
-
-reader.on("line", (line) => {
-  lines.push(line)
-})
-
-let count = 0
-
-reader.on("close", () => {
-  const A = lines[1].split(" ").map(Number)
-  mergeSort(A, 0, A.length)
-  console.log(A.join(" "))
-  console.log(count)
-})
-
 const merge = (A, left, mid, right) => {
   const n1 = mid - left
   const n2 = right - mid
@@ -39,7 +16,6 @@ const merge = (A, left, mid, right) => {
   let i = 0, j = 0
 
   for (let k = left; k < right; k++) {
-    count++
     if (L[i] <= R[j]) {
       A[k] = L[i++]
     } else {
@@ -56,4 +32,9 @@ const mergeSort = (A, left, right) => {
     merge(A, left, mid, right)
   }
   return A
+}
+
+module.exports = {
+  mergeSort,
+  count
 }
