@@ -1,24 +1,3 @@
-process.stdin.resume()
-process.stdin.setEncoding("utf8")
-
-const reader = require("readline").createInterface({
-  input: process.stdin,
-  output: process.stdout,
-})
-
-const lines = []
-
-reader.on("line", (line) => {
-  lines.push(line)
-})
-
-let count = 0
-
-reader.on("close", () => {
-  const n = lines[0] - 0
-  console.log(formattedKochCurve(n, [0, 0], [100, 0]))
-})
-
 const radian60 = (60 * Math.PI) / 180
 const cos60 = Math.cos(radian60)
 const sin60 = Math.sin(radian60)
@@ -66,4 +45,9 @@ const formattedKochCurve = (n, startPoint, endPont) => {
   return kochCurve(n, startPoint, endPont)
     .map((p) => p.map((n) => n.toFixed(5)).join(" "))
     .join("\n")
+}
+
+module.exports = {
+  kochCurve,
+  formattedKochCurve,
 }
