@@ -13,7 +13,8 @@ const merge = (A, left, mid, right) => {
   L[n1] = Number.MAX_VALUE
   R[n2] = Number.MAX_VALUE
 
-  let i = 0, j = 0
+  let i = 0,
+    j = 0
 
   for (let k = left; k < right; k++) {
     if (L[i] <= R[j]) {
@@ -36,5 +37,4 @@ const mergeSort = (A, left, right) => {
 
 module.exports = {
   mergeSort,
-  count
 }
