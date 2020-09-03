@@ -9,3 +9,11 @@ export const swapArrayValue = <T>(A: T[], i: number, j: number): void => {
   A[i] = A[j]
   A[j] = tmp
 }
+
+export enum Ordering {
+  LT,
+  EQ,
+  GT,
+}
+
+export type CompareFunction<T> = (a: T, b: T) => Ordering

@@ -1,15 +1,27 @@
-import { swapArrayValue } from "./common"
+import { CompareFunction, Ordering, swapArrayValue } from "./common"
 
-export const partition = (A: number[], p: number, r: number): number => {
+export const partition = <T>(
+  A: T[],
+  p: number,
+  r: number,
+  compare: CompareFunction<T>
+): number => {
   let x = A[r]
   let i = p - 1
 
   for (let j = p; j < r; j++) {
-    if (A[j] <= x) {
+    const compareResult = compare(A[j], x)
+    if (compareResult != Ordering.GT) {
       i++
       swapArrayValue(A, i, j)
     }
   }
   swapArrayValue(A, i + 1, r)
   return i + 1
+}
+
+export const partitionNumber = (A: number[], p: number, r: number): number => {
+  return partition(A, p, r, (a, b) =>
+    a > b ? Ordering.GT : a < b ? Ordering.LT : Ordering.EQ
+  )
 }
