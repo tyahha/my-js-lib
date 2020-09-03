@@ -1,4 +1,4 @@
-const merge = (A: number[], left: number, mid: number, right: number) => {
+const merge = (A: number[], left: number, mid: number, right: number, n: number): number => {
   const n1 = mid - left
   const n2 = right - mid
   const L = Array(n1 + 1)
@@ -20,17 +20,26 @@ const merge = (A: number[], left: number, mid: number, right: number) => {
     if (L[i] <= R[j]) {
       A[k] = L[i++]
     } else {
+      n += n1 - i
       A[k] = R[j++]
     }
   }
+
+  return n
 }
 
-export const mergeSort = (A: number[], left: number, right: number) => {
+export const mergeSortInternal = (A: number[], left: number, right: number, n: number): number => {
   if (left + 1 < right) {
     const mid = Math.floor((left + right) / 2)
-    mergeSort(A, left, mid)
-    mergeSort(A, mid, right)
-    merge(A, left, mid, right)
+    n = mergeSortInternal(A, left, mid, n)
+    n = mergeSortInternal(A, mid, right, n)
+    n = merge(A, left, mid, right, n)
   }
-  return A
+  return n
+}
+
+export const mergeSort = (A: ReadonlyArray<number>): number[] => {
+  const ret = A.concat()
+  mergeSortInternal(ret, 0, ret.length, 0)
+  return ret
 }

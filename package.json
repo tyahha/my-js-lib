@@ -5,7 +5,7 @@
   "main": "main.js",
   "scripts": {
     "test": "jest",
-    "run": "ncc run main.ts < input.txt",
+    "start": "ncc run main.ts < input.txt",
     "build": "ncc build main.ts -o ./",
     "lint": "eslint ./",
     "lint-fix": "eslint --fix ./"

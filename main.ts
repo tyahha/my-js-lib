@@ -1,5 +1,5 @@
 import readline from "readline"
-import {formattedKochCurve} from "./aoj/koch-curve"
+import { mergeSort } from "./aoj/merge-sort"
 
 process.stdin.resume()
 process.stdin.setEncoding("utf8")
@@ -18,6 +18,6 @@ reader.on("line", (line) => {
 let count = 0
 
 reader.on("close", () => {
-  const n = Number(lines[0])
-  console.log(formattedKochCurve(n, [0, 0], [100, 0]))
+  let A = lines[1].split(" ").map(Number)
+  console.log(mergeSort(A, 0, A.length, 0))
 })
