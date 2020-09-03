@@ -1,6 +1,6 @@
 import readline from "readline"
-import { mergeSort } from "./aoj/merge-sort"
-import { countingSort } from "./aoj/counting-sort"
+import { ssvToNums } from "./aoj/common"
+import { partition } from "./aoj/partition"
 
 process.stdin.resume()
 process.stdin.setEncoding("utf8")
@@ -19,6 +19,13 @@ reader.on("line", (line) => {
 let count = 0
 
 reader.on("close", () => {
-  let A = lines[1].split(" ").map(Number)
-  console.log(countingSort(A).join(" "))
+  const A = ssvToNums(lines[1])
+  const p = partition(A, 0, A.length - 1)
+  for (let i = 0; i < A.length; i++) {
+    if (i !== 0) process.stdout.write(" ")
+    if (i === p) process.stdout.write("[")
+    process.stdout.write(A[i].toString())
+    if (i === p) process.stdout.write("]")
+  }
+  console.log("")
 })
