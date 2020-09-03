@@ -1,4 +1,4 @@
-import { CompareFunction, numberCompare, Ordering } from "./common"
+import { CompareFunction, compareNumber, Ordering } from "./common"
 
 const merge = <T>(
   A: T[],
@@ -67,4 +67,4 @@ export const mergeSort = <T>(
 }
 
 export const mergeSortNumber = (A: ReadonlyArray<number>): number[] =>
-  mergeSort(A, Infinity, numberCompare)
+  mergeSort(A, Infinity, compareNumber)

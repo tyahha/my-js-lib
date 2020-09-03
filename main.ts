@@ -1,6 +1,9 @@
 import readline from "readline"
 import { ssvToNums } from "./aoj/common"
 import { partition } from "./aoj/partition"
+import { Card, CardSentinel, cardToString, compareCard, strToCard } from "./aoj/card"
+import { quickSort } from "./aoj/quick-sort"
+import { mergeSort } from "./aoj/merge-sort"
 
 process.stdin.resume()
 process.stdin.setEncoding("utf8")
@@ -19,13 +22,17 @@ reader.on("line", (line) => {
 let count = 0
 
 reader.on("close", () => {
-  const A = ssvToNums(lines[1])
-  const p = partition(A, 0, A.length - 1)
-  for (let i = 0; i < A.length; i++) {
-    if (i !== 0) process.stdout.write(" ")
-    if (i === p) process.stdout.write("[")
-    process.stdout.write(A[i].toString())
-    if (i === p) process.stdout.write("]")
+  const n = Number(lines[0])
+  const cards: Card[] = []
+  for (let i = 1; i <= n; i++) {
+    cards.push(strToCard(lines[i]))
   }
-  console.log("")
+  const qsCards = quickSort(cards, compareCard)
+  const msCards = mergeSort(cards, CardSentinel, compareCard)
+  const same = qsCards.every((a, i) => {
+    const b = msCards[i]
+    return a.num === b.num && a.mark === b.mark
+  })
+  console.log(same ? "Stable" : "Not stable")
+  qsCards.forEach(e => console.log(cardToString(e)))
 })

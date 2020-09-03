@@ -1,6 +1,6 @@
 import {
   CompareFunction,
-  numberCompare,
+  compareNumber,
   Ordering,
   swapArrayValue,
 } from "./common"
@@ -26,4 +26,4 @@ export const partition = <T>(
 }
 
 export const partitionNumber = (A: number[], p: number, r: number): number =>
-  partition(A, p, r, numberCompare)
+  partition(A, p, r, compareNumber)
