@@ -1,4 +1,9 @@
-import { CompareFunction, Ordering, swapArrayValue } from "./common"
+import {
+  CompareFunction,
+  numberCompare,
+  Ordering,
+  swapArrayValue,
+} from "./common"
 
 export const partition = <T>(
   A: T[],
@@ -20,8 +25,5 @@ export const partition = <T>(
   return i + 1
 }
 
-export const partitionNumber = (A: number[], p: number, r: number): number => {
-  return partition(A, p, r, (a, b) =>
-    a > b ? Ordering.GT : a < b ? Ordering.LT : Ordering.EQ
-  )
-}
+export const partitionNumber = (A: number[], p: number, r: number): number =>
+  partition(A, p, r, numberCompare)

@@ -17,3 +17,6 @@ export enum Ordering {
 }
 
 export type CompareFunction<T> = (a: T, b: T) => Ordering
+
+export const numberCompare: CompareFunction<number> = (a, b) =>
+  a > b ? Ordering.GT : a < b ? Ordering.LT : Ordering.EQ
