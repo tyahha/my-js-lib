@@ -1,6 +1,5 @@
 import readline from "readline"
-import { ssvToNums } from "./aoj/common"
-import { getMinimumCostOfSort } from "./aoj/minimun-cost-sort"
+import { createRootedTree, lineToNodeInfo, NodeInfo } from "./aoj/rooted-tree"
 
 process.stdin.resume()
 process.stdin.setEncoding("utf8")
@@ -17,5 +16,29 @@ reader.on("line", (line) => {
 })
 
 reader.on("close", () => {
-  console.log(getMinimumCostOfSort(ssvToNums(lines[1])))
+  const n = Number(lines[0])
+  const nodeInfos: NodeInfo[] = []
+  for (let i = 1; i <= n; i++) {
+    nodeInfos.push(lineToNodeInfo(lines[i]))
+  }
+
+  const nodes = createRootedTree(nodeInfos)
+
+  nodes.forEach((node) => {
+    const value = node.value
+    let parent = node.parent
+    const nodeType =
+      parent == null
+        ? "root"
+        : node.children.length > 0
+        ? "internal node"
+        : "leaf"
+    const parentValue = parent?.value ?? -1
+
+    console.log(
+      `node ${value}: parent = ${parentValue}, depth = ${node.depth}, ${nodeType}, [${node.children
+        .map((c) => c.value)
+        .join(", ")}]`
+    )
+  })
 })
