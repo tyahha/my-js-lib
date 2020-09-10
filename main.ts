@@ -1,5 +1,11 @@
 import readline from "readline"
-import { binaryTreeSolve } from "./aoj/binary-tree"
+import {
+  BinaryTreeNode,
+  createBinaryTree,
+  inOrderBinaryTreeWalk,
+  postOrderBinaryTreeWalk,
+  preOrderBinaryTreeWalk
+} from "./aoj/binary-tree-walk"
 
 process.stdin.resume()
 process.stdin.setEncoding("utf8")
@@ -16,5 +22,17 @@ reader.on("line", (line) => {
 })
 
 reader.on("close", () => {
-  binaryTreeSolve(lines)
+  const rootNode = createBinaryTree(lines)
+
+  const putNode = (node: BinaryTreeNode) => process.stdout.write(` ${node.value}`)
+
+  console.log("Preorder")
+  preOrderBinaryTreeWalk(rootNode, putNode)
+  console.log()
+  console.log("Inorder")
+  inOrderBinaryTreeWalk(rootNode, putNode)
+  console.log()
+  console.log("Postorder")
+  postOrderBinaryTreeWalk(rootNode, putNode)
+  console.log()
 })
