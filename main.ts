@@ -1,6 +1,6 @@
 import readline from "readline"
-import { postOrderBinaryTreeWalk } from "./aoj/binary-tree-walk"
-import { reconstructionBinaryTree } from "./aoj/reconstruction-binary-tree"
+import { postOrderBinaryTreeWalk } from "./aoj/binary-tree"
+import { binaryTreeReconstruction } from "./aoj/binary-tree-reconstruction"
 import { ssvToNums } from "./aoj/common"
 
 process.stdin.resume()
@@ -18,7 +18,7 @@ reader.on("line", (line) => {
 })
 
 reader.on("close", () => {
-  const rootNode = reconstructionBinaryTree(
+  const rootNode = binaryTreeReconstruction(
     ssvToNums(lines[1]),
     ssvToNums(lines[2])
   )

@@ -1,4 +1,4 @@
-import { BinaryTreeNode } from "./binary-tree-walk"
+import { BinaryTreeNode } from "./binary-tree"
 
 interface NodeWithIndex {
   value: number
@@ -7,7 +7,7 @@ interface NodeWithIndex {
   parent: NodeWithIndex | undefined
   inOrderIndex: number
 }
-export const reconstructionBinaryTree = (
+export const binaryTreeReconstruction = (
   preOrder: number[],
   inorder: number[]
 ): BinaryTreeNode => {

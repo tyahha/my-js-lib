@@ -1,10 +1,9 @@
 import {
-  BinaryTreeNode,
   createBinaryTree,
   inOrderBinaryTreeWalk,
   postOrderBinaryTreeWalk,
-  preOrderBinaryTreeWalk
-} from "./binary-tree-walk"
+  preOrderBinaryTreeWalk,
+} from "./binary-tree"
 import { ssvToNums } from "./common"
 
 describe("binary tree walk", () => {
@@ -25,21 +24,21 @@ describe("binary tree walk", () => {
   })
   test("pre order", () => {
     const ret: number[] = []
-    preOrderBinaryTreeWalk(rootNode, n => {
+    preOrderBinaryTreeWalk(rootNode, (n) => {
       ret.push(n.value)
     })
     expect(ret).toEqual(ssvToNums("0 1 2 3 4 5 6 7 8"))
   })
   test("in order", () => {
     const ret: number[] = []
-    inOrderBinaryTreeWalk(rootNode, n => {
+    inOrderBinaryTreeWalk(rootNode, (n) => {
       ret.push(n.value)
     })
     expect(ret).toEqual(ssvToNums("2 1 3 0 6 5 7 4 8"))
   })
   test("post order", () => {
     const ret: number[] = []
-    postOrderBinaryTreeWalk(rootNode, n => {
+    postOrderBinaryTreeWalk(rootNode, (n) => {
       ret.push(n.value)
     })
     expect(ret).toEqual(ssvToNums("2 3 1 6 7 5 8 4 0"))

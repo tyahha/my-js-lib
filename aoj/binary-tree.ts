@@ -1,85 +1,75 @@
 import { ssvToNums } from "./common"
 
-const NIL = -1
+export const BinaryTreeNil = -1
+const NIL = BinaryTreeNil
 
-interface Node {
+export interface BinaryTreeNode {
   value: number
-  left: number
-  right: number
-  parent: number
-  sibling: number
-  depth: number
-  height: number
+  left: BinaryTreeNode | undefined
+  right: BinaryTreeNode | undefined
+  parent: BinaryTreeNode | undefined
 }
 
-const getDegree = (node: Node): number => {
-  let ret = 0
-  if (node.left !== NIL) ret++
-  if (node.right !== NIL) ret++
-  return ret
+export const preOrderBinaryTreeWalk = (
+  curNode: BinaryTreeNode,
+  process: (node: BinaryTreeNode) => void
+) => {
+  process(curNode)
+  if (curNode.left) preOrderBinaryTreeWalk(curNode.left, process)
+  if (curNode.right) preOrderBinaryTreeWalk(curNode.right, process)
 }
 
-const setDepthAndHeight = (nodes: Node[], i: number, depth: number): number => {
-  if (i === NIL) return -1
-
-  const node = nodes[i]
-  node.depth = depth
-  node.height = Math.max(
-    setDepthAndHeight(nodes, node.left, depth + 1),
-    setDepthAndHeight(nodes, node.right, depth + 1),
-  ) + 1
-  return node.height
+export const inOrderBinaryTreeWalk = (
+  curNode: BinaryTreeNode,
+  process: (node: BinaryTreeNode) => void
+) => {
+  if (curNode.left) inOrderBinaryTreeWalk(curNode.left, process)
+  process(curNode)
+  if (curNode.right) inOrderBinaryTreeWalk(curNode.right, process)
 }
 
-const getNodeType = (node: Node) => {
-  if (node.parent === NIL) return "root"
-  if (node.left !== NIL || node.right !== NIL) return "internal node"
-  return "leaf"
+export const postOrderBinaryTreeWalk = (
+  curNode: BinaryTreeNode,
+  process: (node: BinaryTreeNode) => void
+) => {
+  if (curNode.left) postOrderBinaryTreeWalk(curNode.left, process)
+  if (curNode.right) postOrderBinaryTreeWalk(curNode.right, process)
+  process(curNode)
 }
 
-const getNode = (nodes: Node[], i: number): Node => {
-  let node: Node = nodes[i]
-  if (!node) {
-    node = {
-      value: -1,
-      left: -1,
-      right: -1,
-      parent: -1,
-      sibling: -1,
-      depth: -1,
-      height: -1,
-    }
-    nodes[i] = node
-  }
-  return node
-}
-
-export const binaryTreeSolve = (lines: string[]): void => {
+export const createBinaryTree = (lines: string[]): BinaryTreeNode => {
   const n = Number(lines[0])
-  const nodes = Array<Node>(n)
 
-  for (let i = 1; i<= n; i++) {
+  const nodes = Array<BinaryTreeNode>(n)
+  const getNode = (i: number): BinaryTreeNode => {
+    let node = nodes[i]
+    if (!node) {
+      node = {
+        value: i,
+        left: undefined,
+        right: undefined,
+        parent: undefined,
+      }
+      nodes[i] = node
+    }
+    return node
+  }
+
+  for (let i = 1; i <= n; i++) {
     const [value, left, right] = ssvToNums(lines[i])
-    const curNode = getNode(nodes, value)
-    curNode.value = value
-    curNode.left = left
-    curNode.right = right
-    const leftNode = getNode(nodes, left)
-    leftNode.value = left
-    leftNode.parent = value
-    leftNode.sibling = right
-    const rightNode = getNode(nodes, right)
-    rightNode.value = right
-    rightNode.parent = value
-    rightNode.sibling = left
+    const curNode = getNode(value)
+    if (left !== NIL) {
+      curNode.left = getNode(left)
+      curNode.left.parent = curNode
+    }
+    if (right !== NIL) {
+      curNode.right = getNode(right)
+      curNode.right.parent = curNode
+    }
   }
 
-  const rootIndex = nodes.findIndex(node => node.parent === NIL)
-  setDepthAndHeight(nodes, rootIndex, 0)
+  const rootNode = nodes.find((node) => !node.parent)
+  if (!rootNode) throw new Error("not found root Node")
 
-  for (let i = 0; i < n; i++) {
-    const node = nodes[i]
-
-    console.log(`node ${i}: parent = ${node.parent}, sibling = ${node.sibling}, degree = ${getDegree(node)}, depth = ${node.depth}, height = ${node.height}, ${getNodeType(node)}`)
-  }
+  return rootNode
 }
