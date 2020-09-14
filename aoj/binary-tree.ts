@@ -37,6 +37,13 @@ export const postOrderBinaryTreeWalk = (
   process(curNode)
 }
 
+export const valueToNode = (value: number): BinaryTreeNode => ({
+  value,
+  left: undefined,
+  right: undefined,
+  parent: undefined,
+})
+
 export const createBinaryTree = (lines: string[]): BinaryTreeNode => {
   const n = Number(lines[0])
 
@@ -44,12 +51,7 @@ export const createBinaryTree = (lines: string[]): BinaryTreeNode => {
   const getNode = (i: number): BinaryTreeNode => {
     let node = nodes[i]
     if (!node) {
-      node = {
-        value: i,
-        left: undefined,
-        right: undefined,
-        parent: undefined,
-      }
+      node = valueToNode(i)
       nodes[i] = node
     }
     return node
@@ -72,4 +74,35 @@ export const createBinaryTree = (lines: string[]): BinaryTreeNode => {
   if (!rootNode) throw new Error("not found root Node")
 
   return rootNode
+}
+
+export const insertToBinarySearchTree = (src: number, T: BinaryTreeNode | undefined): BinaryTreeNode => {
+  let z = valueToNode(src)
+  if (!T) {
+    return valueToNode(src)
+  }
+
+  let y: BinaryTreeNode | undefined = undefined
+  let x: BinaryTreeNode | undefined = T
+
+  while (x) {
+    y = x
+    if (z.value < x.value) {
+      x = x.left
+    } else {
+      x = x.right
+    }
+  }
+
+  z.parent = y
+
+  if (y == null) {
+    return z
+  } else if (z.value < y.value) {
+    y.left = z
+  } else {
+    y.right = z
+  }
+
+  return T
 }

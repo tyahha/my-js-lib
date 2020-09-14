@@ -1,7 +1,10 @@
 import readline from "readline"
-import { postOrderBinaryTreeWalk } from "./aoj/binary-tree"
-import { binaryTreeReconstruction } from "./aoj/binary-tree-reconstruction"
-import { ssvToNums } from "./aoj/common"
+import {
+  BinaryTreeNode,
+  inOrderBinaryTreeWalk,
+  insertToBinarySearchTree,
+  preOrderBinaryTreeWalk,
+} from "./aoj/binary-tree"
 
 process.stdin.resume()
 process.stdin.setEncoding("utf8")
@@ -18,11 +21,19 @@ reader.on("line", (line) => {
 })
 
 reader.on("close", () => {
-  const rootNode = binaryTreeReconstruction(
-    ssvToNums(lines[1]),
-    ssvToNums(lines[2])
-  )
-  let str = ""
-  postOrderBinaryTreeWalk(rootNode, (node) => (str += ` ${node.value}`))
-  console.log(str.slice(1))
+  const n = Number(lines[0])
+  let rootNode: BinaryTreeNode | undefined = undefined
+  for (let i = 1; i <= n; i++) {
+    const [method, strNum] = lines[i].split(" ")
+    if (method === "insert") {
+      rootNode = insertToBinarySearchTree(Number(strNum), rootNode)
+    } else if (method === "print" && rootNode) {
+      let inOrder = ""
+      let preOrder = ""
+      inOrderBinaryTreeWalk(rootNode, (node) => (inOrder += ` ${node.value}`))
+      preOrderBinaryTreeWalk(rootNode, (node) => (preOrder += ` ${node.value}`))
+      console.log(inOrder)
+      console.log(preOrder)
+    }
+  }
 })
