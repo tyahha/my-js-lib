@@ -79,26 +79,20 @@ export const createBinaryTree = (lines: string[]): BinaryTreeNode => {
 export const insertToBinarySearchTree = (src: number, T: BinaryTreeNode | undefined): BinaryTreeNode => {
   let z = valueToNode(src)
   if (!T) {
-    return valueToNode(src)
+    return z
   }
 
-  let y: BinaryTreeNode | undefined = undefined
+  let y: BinaryTreeNode = T
   let x: BinaryTreeNode | undefined = T
 
   while (x) {
     y = x
-    if (z.value < x.value) {
-      x = x.left
-    } else {
-      x = x.right
-    }
+    x = z.value < x.value ? x.left : x.right
   }
 
   z.parent = y
 
-  if (y == null) {
-    return z
-  } else if (z.value < y.value) {
+  if (z.value < y.value) {
     y.left = z
   } else {
     y.right = z
