@@ -1,9 +1,9 @@
 import readline from "readline"
 import {
-  BinaryTreeNode,
+  BinaryTreeNode, existsInBinarySearchTree,
   inOrderBinaryTreeWalk,
   insertToBinarySearchTree,
-  preOrderBinaryTreeWalk,
+  preOrderBinaryTreeWalk
 } from "./aoj/binary-tree"
 
 process.stdin.resume()
@@ -34,6 +34,8 @@ reader.on("close", () => {
       preOrderBinaryTreeWalk(rootNode, (node) => (preOrder += ` ${node.value}`))
       console.log(inOrder)
       console.log(preOrder)
+    } else if (method === "find") {
+      console.log(rootNode && existsInBinarySearchTree(rootNode, Number(strNum)) ? "yes" : "no")
     }
   }
 })

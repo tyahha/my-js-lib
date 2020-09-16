@@ -106,3 +106,13 @@ export const insertToBinarySearchTree = (src: number, T: BinaryTreeNode | undefi
 
   return T
 }
+
+export const existsInBinarySearchTree = (rootNode: BinaryTreeNode, num: number): boolean => {
+  let cur: BinaryTreeNode | undefined = rootNode
+  while (cur) {
+    if (cur.value === num) return true
+    cur = cur.value > num ? cur.left : cur.right
+  }
+
+  return false
+}

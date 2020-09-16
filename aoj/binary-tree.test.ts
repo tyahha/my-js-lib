@@ -1,5 +1,5 @@
 import {
-  createBinaryTree,
+  createBinaryTree, existsInBinarySearchTree,
   inOrderBinaryTreeWalk, insertToBinarySearchTree,
   postOrderBinaryTreeWalk,
   preOrderBinaryTreeWalk
@@ -59,5 +59,20 @@ describe("binary tree walk", () => {
 
     expect(inOrder).toEqual(ssvToNums("1 12 17 20 25 30 88"))
     expect(preOrder).toEqual(ssvToNums("30 12 1 20 17 25 88"))
+  })
+
+  test("exists in binary search tree", () => {
+    let rootNode = insertToBinarySearchTree(30, undefined)
+    expect(existsInBinarySearchTree(rootNode, 30)).toBe(true)
+
+    rootNode = insertToBinarySearchTree(88, rootNode)
+    expect(existsInBinarySearchTree(rootNode, 30)).toBe(true)
+    expect(existsInBinarySearchTree(rootNode, 88)).toBe(true)
+
+    rootNode = insertToBinarySearchTree(1, rootNode)
+    expect(existsInBinarySearchTree(rootNode, 30)).toBe(true)
+    expect(existsInBinarySearchTree(rootNode, 88)).toBe(true)
+    expect(existsInBinarySearchTree(rootNode, 1)).toBe(true)
+    expect(existsInBinarySearchTree(rootNode, 3)).toBe(false)
   })
 })
