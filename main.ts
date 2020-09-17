@@ -1,6 +1,6 @@
 import readline from "readline"
 import {
-  BinaryTreeNode, existsInBinarySearchTree,
+  BinaryTreeNode, deleteFromBinarySearchTree, existsInBinarySearchTree,
   inOrderBinaryTreeWalk,
   insertToBinarySearchTree,
   preOrderBinaryTreeWalk
@@ -35,7 +35,9 @@ reader.on("close", () => {
       console.log(inOrder)
       console.log(preOrder)
     } else if (method === "find") {
-      console.log(rootNode && existsInBinarySearchTree(rootNode, Number(strNum)) ? "yes" : "no")
+      console.log(existsInBinarySearchTree(rootNode, Number(strNum)) ? "yes" : "no")
+    } else if (method === "delete") {
+      deleteFromBinarySearchTree(rootNode, Number(strNum))
     }
   }
 })

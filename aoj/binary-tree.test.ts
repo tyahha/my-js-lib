@@ -1,5 +1,6 @@
 import {
-  createBinaryTree, existsInBinarySearchTree,
+  BinaryTreeNode,
+  createBinaryTree, deleteFromBinarySearchTree, existsInBinarySearchTree,
   inOrderBinaryTreeWalk, insertToBinarySearchTree,
   postOrderBinaryTreeWalk,
   preOrderBinaryTreeWalk
@@ -74,5 +75,30 @@ describe("binary tree walk", () => {
     expect(existsInBinarySearchTree(rootNode, 88)).toBe(true)
     expect(existsInBinarySearchTree(rootNode, 1)).toBe(true)
     expect(existsInBinarySearchTree(rootNode, 3)).toBe(false)
+  })
+
+  test("delete node from binary serach tree", () => {
+    let rootNode: BinaryTreeNode | undefined = insertToBinarySearchTree(8, undefined)
+    rootNode = insertToBinarySearchTree(88, rootNode)
+    rootNode = insertToBinarySearchTree(1, rootNode)
+
+    expect(existsInBinarySearchTree(rootNode, 1)).toBe(true)
+    expect(existsInBinarySearchTree(rootNode, 88)).toBe(true)
+
+    rootNode = deleteFromBinarySearchTree(rootNode, 1)
+    expect(existsInBinarySearchTree(rootNode, 1)).toBe(false)
+    expect(existsInBinarySearchTree(rootNode, 88)).toBe(true)
+  })
+
+  test("delete node from binary serach tree 2", () => {
+    let rootNode: BinaryTreeNode | undefined = insertToBinarySearchTree(8, undefined)
+    rootNode = insertToBinarySearchTree(2, rootNode)
+    rootNode = insertToBinarySearchTree(3, rootNode)
+    rootNode = insertToBinarySearchTree(7, rootNode)
+    rootNode = insertToBinarySearchTree(22, rootNode)
+    rootNode = insertToBinarySearchTree( 1, rootNode)
+    rootNode = deleteFromBinarySearchTree(rootNode, 3)
+    rootNode = deleteFromBinarySearchTree(rootNode, 7)
+    expect(!existsInBinarySearchTree(rootNode, 7))
   })
 })

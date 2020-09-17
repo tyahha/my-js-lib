@@ -101,7 +101,9 @@ export const insertToBinarySearchTree = (src: number, T: BinaryTreeNode | undefi
   return T
 }
 
-export const existsInBinarySearchTree = (rootNode: BinaryTreeNode, num: number): boolean => {
+export const existsInBinarySearchTree = (rootNode: BinaryTreeNode | undefined, num: number): boolean => {
+  if (!rootNode) return false
+
   let cur: BinaryTreeNode | undefined = rootNode
   while (cur) {
     if (cur.value === num) return true
@@ -109,4 +111,55 @@ export const existsInBinarySearchTree = (rootNode: BinaryTreeNode, num: number):
   }
 
   return false
+}
+
+export const deleteFromBinarySearchTree = (rootNode: BinaryTreeNode | undefined, num: number): BinaryTreeNode | undefined => {
+  let cur = rootNode
+  while (cur) {
+    if (cur.value === num) {
+      if (cur.parent === undefined) {
+        return undefined
+      } else {
+        const delNode = (target: BinaryTreeNode) => {
+          if (!target.parent) return
+          if (target.left) {
+            if (target.parent.left === target) {
+              target.parent.left = target.left
+            } else {
+              target.parent.right = target.left
+            }
+            target.left.parent = target.parent
+          } else if (target.right) {
+            if (target.parent.left === target) {
+              target.parent.left = target.right
+            } else {
+              target.parent.right = target.right
+            }
+            target.right.parent = target.parent
+          } else {
+            if (target.parent.left === target) {
+              target.parent.left = undefined
+            } else {
+              target.parent.right = undefined
+            }
+          }
+        }
+
+        if (cur.left && cur.right) {
+          let target = cur.right
+          while (target.left) {
+            target = target.left
+          }
+          cur.value = target.value
+          delNode(target)
+        } else {
+          delNode(cur)
+        }
+      }
+      return rootNode
+    } else {
+      cur = num < cur.value ? cur.left : cur.right
+    }
+  }
+  return rootNode
 }
