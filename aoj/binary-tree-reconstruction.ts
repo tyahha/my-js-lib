@@ -6,6 +6,7 @@ interface NodeWithIndex {
   right: NodeWithIndex | undefined
   parent: NodeWithIndex | undefined
   inOrderIndex: number
+  priority: number
 }
 export const binaryTreeReconstruction = (
   preOrder: number[],
@@ -26,6 +27,7 @@ export const binaryTreeReconstruction = (
         parent: undefined,
         left: undefined,
         right: undefined,
+        priority: 0,
       }
       nodes[curPreOrderIndex] = node
     }
@@ -33,9 +35,17 @@ export const binaryTreeReconstruction = (
     return node
   }
 
-  const setNode = (curNode: NodeWithIndex, leftLimit: number, rightLimit: number): void => {
+  const setNode = (
+    curNode: NodeWithIndex,
+    leftLimit: number,
+    rightLimit: number
+  ): void => {
     let nextNode = getNextNode()
-    if (nextNode && leftLimit <= nextNode.inOrderIndex && nextNode.inOrderIndex < curNode.inOrderIndex) {
+    if (
+      nextNode &&
+      leftLimit <= nextNode.inOrderIndex &&
+      nextNode.inOrderIndex < curNode.inOrderIndex
+    ) {
       curPreOrderIndex++
       curNode.left = nextNode
       nextNode.parent = curNode
@@ -46,7 +56,8 @@ export const binaryTreeReconstruction = (
 
     if (
       nextNode &&
-      curNode.inOrderIndex < nextNode.inOrderIndex && nextNode.inOrderIndex <= rightLimit
+      curNode.inOrderIndex < nextNode.inOrderIndex &&
+      nextNode.inOrderIndex <= rightLimit
     ) {
       curPreOrderIndex++
       curNode.right = nextNode

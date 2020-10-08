@@ -3,7 +3,7 @@ import {
   BinaryTreeNode, deleteFromBinarySearchTree, existsInBinarySearchTree,
   inOrderBinaryTreeWalk,
   insertToBinarySearchTree,
-  preOrderBinaryTreeWalk
+  preOrderBinaryTreeWalk, treapDelete, treapInsert
 } from "./aoj/binary-tree"
 
 process.stdin.resume()
@@ -24,9 +24,9 @@ reader.on("close", () => {
   const n = Number(lines[0])
   let rootNode: BinaryTreeNode | undefined = undefined
   for (let i = 1; i <= n; i++) {
-    const [method, strNum] = lines[i].split(" ")
+    const [method, strNum, strNum2] = lines[i].split(" ")
     if (method === "insert") {
-      rootNode = insertToBinarySearchTree(Number(strNum), rootNode)
+      rootNode = treapInsert(rootNode, Number(strNum), Number(strNum2))
     } else if (method === "print" && rootNode) {
       let inOrder = ""
       let preOrder = ""
@@ -37,7 +37,7 @@ reader.on("close", () => {
     } else if (method === "find") {
       console.log(existsInBinarySearchTree(rootNode, Number(strNum)) ? "yes" : "no")
     } else if (method === "delete") {
-      deleteFromBinarySearchTree(rootNode, Number(strNum))
+      rootNode = treapDelete(rootNode, Number(strNum))
     }
   }
 })

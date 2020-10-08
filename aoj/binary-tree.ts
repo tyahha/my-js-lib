@@ -8,6 +8,7 @@ export interface BinaryTreeNode {
   left: BinaryTreeNode | undefined
   right: BinaryTreeNode | undefined
   parent: BinaryTreeNode | undefined
+  priority: number
 }
 
 export const preOrderBinaryTreeWalk = (
@@ -42,6 +43,7 @@ export const valueToNode = (value: number): BinaryTreeNode => ({
   left: undefined,
   right: undefined,
   parent: undefined,
+  priority: 0,
 })
 
 export const createBinaryTree = (lines: string[]): BinaryTreeNode => {
@@ -76,7 +78,10 @@ export const createBinaryTree = (lines: string[]): BinaryTreeNode => {
   return rootNode
 }
 
-export const insertToBinarySearchTree = (src: number, T: BinaryTreeNode | undefined): BinaryTreeNode => {
+export const insertToBinarySearchTree = (
+  src: number,
+  T: BinaryTreeNode | undefined
+): BinaryTreeNode => {
   let z = valueToNode(src)
   if (!T) {
     return z
@@ -101,7 +106,10 @@ export const insertToBinarySearchTree = (src: number, T: BinaryTreeNode | undefi
   return T
 }
 
-export const existsInBinarySearchTree = (rootNode: BinaryTreeNode | undefined, num: number): boolean => {
+export const existsInBinarySearchTree = (
+  rootNode: BinaryTreeNode | undefined,
+  num: number
+): boolean => {
   if (!rootNode) return false
 
   let cur: BinaryTreeNode | undefined = rootNode
@@ -113,7 +121,10 @@ export const existsInBinarySearchTree = (rootNode: BinaryTreeNode | undefined, n
   return false
 }
 
-export const deleteFromBinarySearchTree = (rootNode: BinaryTreeNode | undefined, num: number): BinaryTreeNode | undefined => {
+export const deleteFromBinarySearchTree = (
+  rootNode: BinaryTreeNode | undefined,
+  num: number
+): BinaryTreeNode | undefined => {
   let cur = rootNode
   while (cur) {
     if (cur.value === num) {
@@ -162,4 +173,77 @@ export const deleteFromBinarySearchTree = (rootNode: BinaryTreeNode | undefined,
     }
   }
   return rootNode
+}
+
+export const rightRotate = (t: BinaryTreeNode): BinaryTreeNode => {
+  const s = t.left
+  if (!s) return t
+  t.left = s.right
+  s.right = t
+  return s
+}
+
+export const leftRotate = (t: BinaryTreeNode): BinaryTreeNode => {
+  const s = t.right
+  if (!s) return t
+  t.right = s.left
+  s.left = t
+  return s
+}
+
+export const treapInsert = (
+  t: BinaryTreeNode | undefined,
+  key: number,
+  priority: number
+): BinaryTreeNode => {
+  if (!t) {
+    const node = valueToNode(key)
+    node.priority = priority
+    return node
+  }
+
+  if (key === t.value) return t
+
+  if (key < t.value) {
+    t.left = treapInsert(t.left, key, priority)
+    if (t.priority < t.left.priority) {
+      t = rightRotate(t)
+    }
+  } else {
+    t.right = treapInsert(t.right, key, priority)
+    if (t.priority < t.right.priority) {
+      t = leftRotate(t)
+    }
+  }
+
+  return t
+}
+
+export const treapDelete = (t: BinaryTreeNode | undefined, key: number): BinaryTreeNode | undefined => {
+  if (!t) return undefined
+  if (key < t.value) {
+    t.left = treapDelete(t.left, key)
+  } else if (key > t.value) {
+    t.right = treapDelete(t.right, key)
+  } else {
+    return _treapDelete(t, key)
+  }
+  return t
+}
+
+const _treapDelete = (t: BinaryTreeNode, key: number): BinaryTreeNode | undefined => {
+  if (!t.left && !t.right) {
+    return undefined
+  } else if (!t.left) {
+    t = leftRotate(t)
+  } else if (!t.right) {
+    t = rightRotate(t)
+  } else {
+    if (t.left.priority > t.right.priority) {
+      t = rightRotate(t)
+    } else {
+      t = leftRotate(t)
+    }
+  }
+  return treapDelete(t, key)
 }
