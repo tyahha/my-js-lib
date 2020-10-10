@@ -1,10 +1,6 @@
 import readline from "readline"
-import {
-  BinaryTreeNode, deleteFromBinarySearchTree, existsInBinarySearchTree,
-  inOrderBinaryTreeWalk,
-  insertToBinarySearchTree,
-  preOrderBinaryTreeWalk, treapDelete, treapInsert
-} from "./aoj/binary-tree"
+import { ssvToNums } from "./aoj/common"
+import { getCompleteBinaryTreeInfo } from "./aoj/complete-binary-tree"
 
 process.stdin.resume()
 process.stdin.setEncoding("utf8")
@@ -21,23 +17,13 @@ reader.on("line", (line) => {
 })
 
 reader.on("close", () => {
-  const n = Number(lines[0])
-  let rootNode: BinaryTreeNode | undefined = undefined
-  for (let i = 1; i <= n; i++) {
-    const [method, strNum, strNum2] = lines[i].split(" ")
-    if (method === "insert") {
-      rootNode = treapInsert(rootNode, Number(strNum), Number(strNum2))
-    } else if (method === "print" && rootNode) {
-      let inOrder = ""
-      let preOrder = ""
-      inOrderBinaryTreeWalk(rootNode, (node) => (inOrder += ` ${node.value}`))
-      preOrderBinaryTreeWalk(rootNode, (node) => (preOrder += ` ${node.value}`))
-      console.log(inOrder)
-      console.log(preOrder)
-    } else if (method === "find") {
-      console.log(existsInBinarySearchTree(rootNode, Number(strNum)) ? "yes" : "no")
-    } else if (method === "delete") {
-      rootNode = treapDelete(rootNode, Number(strNum))
-    }
-  }
+  const nodes = ssvToNums(lines[1])
+  const ns = getCompleteBinaryTreeInfo(nodes)
+  ns.map(([key, parent, left, right], i) => {
+    console.log(
+      `node ${i + 1}: key = ${key}, ${parent ? `parent key = ${parent}, ` : ""}${
+        left ? `left key = ${left}, ` : ""
+      }${right ? `right key = ${right}, ` : ""}`
+    )
+  })
 })
