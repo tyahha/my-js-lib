@@ -1,5 +1,5 @@
 import readline from "readline"
-import { extractMaxFromHeap, insertToMaxHeap } from "./aoj/heap"
+import { getFibonacciNumber } from "./aoj/fibonacci-number"
 
 process.stdin.resume()
 process.stdin.setEncoding("utf8")
@@ -16,19 +16,5 @@ reader.on("line", (line) => {
 })
 
 reader.on("close", () => {
-  let heap = [0]
-  let i = 0
-  let str = ""
-  while (true) {
-    const [method, strNum] = lines[i++].split(" ")
-    if (method === "end") {
-      break
-    } else if (method === "insert") {
-      const S = Number(strNum)
-      insertToMaxHeap(heap, S)
-    } else if (method === "extract") {
-      str += `${extractMaxFromHeap(heap)}\n`
-    }
-  }
-  process.stdout.write(str)
+  console.log(getFibonacciNumber(Number(lines[0])))
 })
