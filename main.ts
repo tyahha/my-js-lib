@@ -1,5 +1,6 @@
 import readline from "readline"
-import { getFibonacciNumber } from "./aoj/fibonacci-number"
+import { ssvToNums } from "./aoj/common"
+import { getMatrixMultiplicationCount } from "./aoj/matrix"
 
 process.stdin.resume()
 process.stdin.setEncoding("utf8")
@@ -16,5 +17,13 @@ reader.on("line", (line) => {
 })
 
 reader.on("close", () => {
-  console.log(getFibonacciNumber(Number(lines[0])))
+  const n = Number(lines[0])
+  let [r1, c1] = ssvToNums(lines[1])
+  let multiplicationCount = 0
+  for (let i = 2; i <= n; i++) {
+    const [r2, c2] = ssvToNums(lines[i])
+    multiplicationCount += getMatrixMultiplicationCount(r1, c1, r2, c2)
+    c1 = c2
+  }
+  console.log(multiplicationCount)
 })
