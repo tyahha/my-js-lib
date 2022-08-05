@@ -8,6 +8,7 @@ describe("isPrimeNumber", () => {
     [2, "prime number"],
     [3, "prime number"],
     [4, "not prime number"],
+    [25, "not prime number"],
   ])("%d is %s", (n, primeNumberOrNot) => {
     expect(isPrimeNumber(n)).toBe(primeNumberOrNot === "prime number")
   })
